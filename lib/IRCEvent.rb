@@ -21,11 +21,11 @@ class IRCEvent
   attr_reader :hostmask, :message, :event_type, :from, :channel, :target, :mode, :stats
   def initialize (line)
     line.sub!(/^:/, '')
-    mess_parts = line.split(':', 2);
+    mess_parts = line.split(' :', 2);
     # mess_parts[0] is server info
     # mess_parts[1] is the message that was sent
     @message = mess_parts[1]
-    @stats = mess_parts[0].scan(/[-`\^\{\}\[\]\w.\#\@\+=\/]+/)
+    @stats = mess_parts[0].scan(/[-`\^\{\}\[\]\w.\#\@\+=\/:]+/)
     if @stats[0].match(/^PING/)
       @event_type = 'ping'
     elsif @stats[1] && @stats[1].match(/^\d+/)
